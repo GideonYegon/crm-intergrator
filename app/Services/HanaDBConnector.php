@@ -38,13 +38,13 @@ class HanaDBConnector
 
         try {
             $pdo = new PDO($dsn, $username, $password);
+            dd($pdo);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $pdo;
         } catch (\Throwable $th) {
             Log::error($th);
         }
 
-        // dd($dsn);
     }
 
     /**

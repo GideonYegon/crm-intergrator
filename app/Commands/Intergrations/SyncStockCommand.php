@@ -45,16 +45,13 @@ class SyncStockCommand extends Command
            
             $pdo = HanaDBConnector::get()->connect($clientID);
 
-            // dd($pdo);
-
+    
             $queryStringUnsycDocs = "SELECT * FROM \"{$databaseName}\".\"VwStockQuantities\" T0 WHERE T0.\"QtyInstock\" >0";
 
 
-            // Log::info($queryStringUnsycDocs);
             $stockData = (new QueryExcuter($pdo, $queryStringUnsycDocs))->fetchData();
             
-        //   dd($stockData);
-
+       
             (new CRMServiceProvider())->postData($url, [
                 'stockInfo' => $stockData
             ]);

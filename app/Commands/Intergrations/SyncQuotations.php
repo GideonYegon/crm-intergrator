@@ -38,7 +38,7 @@ class SyncQuotations extends Command
 
         foreach ($databases as $key => $clientID) {
 
-            $url = "/api/get-quotations";
+            $url = "/api/get-quotations" . $clientID;
 
             
             $configs = (new ConfigProviderService())->configs($clientID);
@@ -50,17 +50,12 @@ class SyncQuotations extends Command
             dd($pdo);
 
           
-
             $quotations = (new CRMServiceProvider())->getData($url, $clientID);
-
-
-            // dd($response);
 
        
             $responses = $quotations;
          
 
-      
             if (count($responses) <= 0) {
                 Log::error("NO PENDING QUOTATIONS TO PROCESS, DATABASE: " . count($responses));
                 continue;
@@ -70,7 +65,7 @@ class SyncQuotations extends Command
 
             foreach ($responses as $key => $response) {
 
-                dd($response);
+ 
 
                 $expressWayUpdateApprovalLogUrl = "/update-approval-decison/" . $decision['request_id'];
                 try {
